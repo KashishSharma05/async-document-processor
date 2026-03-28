@@ -144,7 +144,7 @@ export default function Upload() {
                   <button
                     onClick={handleUpload}
                     disabled={isPending}
-                    className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 text-white py-4 rounded-xl font-bold text-lg shadow-xl shadow-indigo-500/30 hover:shadow-2xl hover:shadow-indigo-500/40 active:translate-y-0.5 active:shadow-md disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-3"
+                    className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 text-white py-4 rounded-xl font-bold text-lg shadow-xl shadow-indigo-500/30 hover:shadow-2xl hover:shadow-indigo-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] active:shadow-md disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-200 select-none flex items-center justify-center gap-3"
                   >
                     {isPending ? (
                       <>

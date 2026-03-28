@@ -44,7 +44,7 @@ export default function Jobs() {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`relative px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all flex items-center gap-2 group ${
+                className={`relative px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all duration-150 flex items-center gap-2 group active:scale-[0.97] select-none ${
                   activeTab === tab 
                     ? "bg-primary text-primary-foreground shadow-md shadow-primary/25" 
                     : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -81,12 +81,28 @@ export default function Jobs() {
             </thead>
             <tbody className="divide-y divide-border/50">
               {isLoading && !documents ? (
-                <tr>
-                  <td colSpan={5} className="px-6 py-24 text-center">
-                    <Loader2 className="w-10 h-10 animate-spin text-primary mx-auto mb-4" />
-                    <p className="text-muted-foreground font-semibold">Loading jobs from server...</p>
-                  </td>
-                </tr>
+                Array.from({ length: 5 }).map((_, i) => (
+                  <tr key={i} className="border-l-2 border-transparent">
+                    <td className="px-6 py-5">
+                      <div className="flex items-center gap-4">
+                        <div className="w-11 h-11 rounded-xl bg-muted animate-pulse shrink-0"></div>
+                        <div className="space-y-2">
+                          <div className="h-4 bg-muted animate-pulse rounded-lg w-40"></div>
+                          <div className="h-3 bg-muted animate-pulse rounded-lg w-24 opacity-60"></div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-5"><div className="h-7 bg-muted animate-pulse rounded-full w-24"></div></td>
+                    <td className="px-6 py-5">
+                      <div className="space-y-2">
+                        <div className="h-3 bg-muted animate-pulse rounded-lg w-10"></div>
+                        <div className="h-2.5 bg-muted animate-pulse rounded-full w-full"></div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-5"><div className="h-4 bg-muted animate-pulse rounded-lg w-28"></div></td>
+                    <td className="px-6 py-5 text-right"><div className="h-9 bg-muted animate-pulse rounded-xl w-20 ml-auto"></div></td>
+                  </tr>
+                ))
               ) : filteredDocs.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="px-6 py-24 text-center">
@@ -106,7 +122,7 @@ export default function Jobs() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ delay: index * 0.05, duration: 0.3 }}
-                      className="hover:bg-muted/40 transition-colors group"
+                      className="hover:bg-muted/40 transition-all duration-150 group border-l-2 border-transparent hover:border-primary/40"
                     >
                       <td className="px-6 py-5">
                         <div className="flex items-center gap-4">
@@ -137,7 +153,9 @@ export default function Jobs() {
                               style={{ width: `${doc.progress}%` }}
                             >
                               {doc.status === 'processing' && (
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-[shimmer_1.5s_infinite]"></div>
+                                <div className="absolute inset-0 overflow-hidden rounded-full">
+                                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-[shimmer_1.8s_ease-in-out_infinite]"></div>
+                                </div>
                               )}
                             </div>
                           </div>
@@ -152,7 +170,7 @@ export default function Jobs() {
                             <button 
                               onClick={() => retryDoc({ id: doc.id })}
                               disabled={isRetrying}
-                              className="p-2.5 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors shadow-sm border border-transparent hover:border-red-200"
+                              className="p-2.5 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all duration-150 shadow-sm border border-transparent hover:border-red-200 active:scale-90 select-none"
                               title="Retry Job"
                             >
                               <RefreshCw className={`w-4 h-4 ${isRetrying ? 'animate-spin' : ''}`} />
@@ -160,7 +178,7 @@ export default function Jobs() {
                           )}
                           <Link 
                             href={`/documents/${doc.id}`}
-                            className="px-4 py-2 bg-background border border-border hover:border-primary/50 hover:bg-primary/5 text-sm font-bold rounded-xl shadow-sm hover:shadow transition-all"
+                            className="px-4 py-2 bg-background border border-border hover:border-primary/50 hover:bg-primary/5 text-sm font-bold rounded-xl shadow-sm hover:shadow active:scale-[0.96] transition-all duration-150 select-none"
                           >
                             Details
                           </Link>
@@ -178,10 +196,9 @@ export default function Jobs() {
   );
 }
 
-// Just for the empty state icon
 function ListTree(props: any) {
   return (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinelinejoin="round">
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M21 12h-8"/><path d="M21 6H8"/><path d="M21 18h-8"/><path d="M12 12s-3 0-3-3"/><path d="M12 18s-3 0-3-3"/><path d="M3 6v12"/><path d="M3 18h3"/>
     </svg>
   );

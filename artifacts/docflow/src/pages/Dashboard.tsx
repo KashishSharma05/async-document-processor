@@ -61,7 +61,7 @@ export default function Dashboard() {
           <h1 className="text-3xl font-display font-bold text-foreground">Dashboard</h1>
           <p className="text-muted-foreground mt-1 text-lg">Overview of your document processing operations.</p>
         </div>
-        <Link href="/upload" className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/40 hover:-translate-y-0.5 active:translate-y-0 active:shadow-md transition-all duration-300">
+        <Link href="/upload" className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] active:shadow-md transition-all duration-200 select-none">
           <FileText className="w-5 h-5" />
           Process New Document
         </Link>
@@ -172,10 +172,10 @@ export default function Dashboard() {
                 </tr>
               ) : (
                 recentDocs.map((doc) => (
-                  <tr key={doc.id} className="hover:bg-muted/50 transition-colors group">
+                  <tr key={doc.id} className="hover:bg-muted/40 transition-all duration-150 group border-l-2 border-transparent hover:border-primary/40">
                     <td className="px-6 py-5">
                       <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-md transition-all duration-300">
+                        <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:scale-105 group-hover:shadow-md transition-all duration-200">
                           <FileText className="w-5 h-5" />
                         </div>
                         <div>
@@ -205,7 +205,9 @@ export default function Dashboard() {
                             style={{ width: `${doc.progress}%` }}
                           >
                             {doc.status === 'processing' && (
-                              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shimmer_1.5s_infinite]"></div>
+                              <div className="absolute inset-0 overflow-hidden rounded-full">
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-[shimmer_1.8s_ease-in-out_infinite]"></div>
+                              </div>
                             )}
                           </div>
                         </div>
@@ -214,7 +216,7 @@ export default function Dashboard() {
                     <td className="px-6 py-5 text-right">
                       <Link 
                         href={`/documents/${doc.id}`}
-                        className="inline-flex items-center justify-center text-sm font-semibold px-4 py-2 rounded-xl bg-background border border-border text-foreground hover:bg-primary hover:text-white hover:border-primary shadow-sm hover:shadow transition-all duration-200"
+                        className="inline-flex items-center justify-center text-sm font-semibold px-4 py-2 rounded-xl bg-background border border-border text-foreground hover:bg-primary hover:text-white hover:border-primary shadow-sm hover:shadow active:scale-[0.96] transition-all duration-150 select-none"
                       >
                         View
                       </Link>
@@ -252,7 +254,7 @@ function StatCard({
   trendUp?: boolean
 }) {
   return (
-    <div className="bg-card border border-border/60 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 group relative overflow-hidden h-full flex flex-col">
+    <div className="bg-card border border-border/60 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 active:translate-y-0 active:shadow-sm transition-all duration-300 group relative overflow-hidden h-full flex flex-col cursor-default">
       {/* Top Gradient Accent */}
       <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${gradientClass} opacity-80 group-hover:opacity-100 transition-opacity`}></div>
       

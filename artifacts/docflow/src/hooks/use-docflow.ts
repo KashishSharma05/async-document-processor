@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import {
   useUploadDocument,
   useUpdateDocument,
@@ -17,23 +17,21 @@ import {
 
 export function useUploadFile() {
   const qc = useQueryClient();
-  const { toast } = useToast();
-  
+
   return useUploadDocument({
     mutation: {
       onSuccess: () => {
         qc.invalidateQueries({ queryKey: getListDocumentsQueryKey() });
         qc.invalidateQueries({ queryKey: getGetStatsQueryKey() });
-        toast({
-          title: "Document Uploaded",
-          description: "Your document has been successfully queued for processing.",
+        toast.success("Document uploaded", {
+          description: "Queued for processing. You can track progress in Jobs.",
+          duration: 4000,
         });
       },
       onError: (err: any) => {
-        toast({
-          title: "Upload Failed",
+        toast.error("Upload failed", {
           description: err?.message || "There was an error uploading the document.",
-          variant: "destructive",
+          duration: 5000,
         });
       },
     },
@@ -42,23 +40,21 @@ export function useUploadFile() {
 
 export function useSaveDocumentData() {
   const qc = useQueryClient();
-  const { toast } = useToast();
 
   return useUpdateDocument({
     mutation: {
       onSuccess: (data) => {
         qc.invalidateQueries({ queryKey: getGetDocumentQueryKey(data.id) });
         qc.invalidateQueries({ queryKey: getListDocumentsQueryKey() });
-        toast({
-          title: "Data Saved",
-          description: "Document extracted data has been updated.",
+        toast.success("Changes saved", {
+          description: "Extracted document data has been updated.",
+          duration: 3000,
         });
       },
       onError: (err: any) => {
-        toast({
-          title: "Save Failed",
+        toast.error("Save failed", {
           description: err?.message || "Could not save the document data.",
-          variant: "destructive",
+          duration: 5000,
         });
       },
     },
@@ -67,7 +63,6 @@ export function useSaveDocumentData() {
 
 export function useRetryJob() {
   const qc = useQueryClient();
-  const { toast } = useToast();
 
   return useRetryDocument({
     mutation: {
@@ -75,16 +70,15 @@ export function useRetryJob() {
         qc.invalidateQueries({ queryKey: getGetDocumentQueryKey(data.id) });
         qc.invalidateQueries({ queryKey: getListDocumentsQueryKey() });
         qc.invalidateQueries({ queryKey: getGetStatsQueryKey() });
-        toast({
-          title: "Job Retried",
-          description: "The document processing job has been requeued.",
+        toast.success("Job requeued", {
+          description: "The document has been added back to the processing queue.",
+          duration: 3000,
         });
       },
       onError: (err: any) => {
-        toast({
-          title: "Retry Failed",
+        toast.error("Retry failed", {
           description: err?.message || "Could not retry the job.",
-          variant: "destructive",
+          duration: 5000,
         });
       },
     },
@@ -92,20 +86,19 @@ export function useRetryJob() {
 }
 
 export function useExportFile() {
-  const { toast } = useToast();
-
   const handleExport = async (id: string, format: "json" | "csv", filename: string) => {
+    const toastId = toast.loading(`Preparing ${format.toUpperCase()} export...`);
     try {
       const result = await exportDocument(id, { format });
-      
-      const content = typeof result === "string" 
-        ? result 
+
+      const content = typeof result === "string"
+        ? result
         : JSON.stringify(result, null, 2);
-      
-      const blob = new Blob([content], { 
-        type: format === "json" ? "application/json" : "text/csv" 
+
+      const blob = new Blob([content], {
+        type: format === "json" ? "application/json" : "text/csv"
       });
-      
+
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -114,16 +107,17 @@ export function useExportFile() {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      
-      toast({
-        title: "Export Successful",
-        description: `Downloaded as ${format.toUpperCase()}`,
+
+      toast.success("Export complete", {
+        id: toastId,
+        description: `File downloaded as .${format}`,
+        duration: 3000,
       });
     } catch (err: any) {
-      toast({
-        title: "Export Failed",
+      toast.error("Export failed", {
+        id: toastId,
         description: err?.message || "Could not export document data.",
-        variant: "destructive",
+        duration: 5000,
       });
     }
   };
