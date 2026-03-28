@@ -1,0 +1,92 @@
+Build a full-stack document processing system with an extremely polished, premium SaaS-level UI and smooth user experience.
+
+Design inspiration:
+- Stripe Dashboard
+- Linear App
+- Notion UI
+- Vercel Dashboard
+
+Frontend Design Requirements:
+- Use a modern design system with consistent spacing, typography, and color hierarchy
+- Layout:
+  - Left sidebar (Dashboard, Upload, Jobs)
+  - Top navbar with search, title, and actions
+- Use soft shadows, rounded corners (lg), glassmorphism where appropriate
+- Add subtle gradients and modern UI effects
+- Smooth animations (hover, transitions, loading states)
+- Skeleton loaders for better UX
+
+Color System:
+- Primary: Indigo/Blue gradient (#4f46e5 to #3b82f6)
+- Background: soft gray (#f8fafc)
+- Cards: white with shadow
+- Success: green (#22c55e)
+- Processing: blue (#3b82f6)
+- Failed: red (#ef4444)
+- Queued: gray (#6b7280)
+
+Core UI Features:
+
+1. Upload Experience:
+- Drag & drop file upload with animation
+- Highlight drop area on hover
+- Show uploading state with spinner
+
+2. Dashboard Page:
+- Top summary cards:
+  - Total Documents
+  - Processing
+  - Completed
+  - Failed
+- Cards should have icons, colors, and hover effects
+
+- Main table:
+  - filename
+  - upload date
+  - status badge (colored + animated)
+  - progress bar (animated smoothly)
+  - actions (view, retry)
+
+3. Job Status UI:
+- Queued → gray pill badge
+- Processing → blue animated badge + moving progress bar
+- Completed → green badge
+- Failed → red badge with retry button
+
+4. Document Detail Page:
+- Clean form layout with sections:
+  - Metadata
+  - Extracted Data
+- Editable fields
+- Sticky "Finalize" button
+- Professional spacing and alignment
+
+5. Export Feature:
+- Buttons for JSON and CSV
+- Show success toast notification
+
+UX Enhancements:
+- Add hover effects on all clickable elements
+- Use micro-interactions (button press, card hover)
+- Smooth transitions between pages
+- Use loading skeletons instead of blank screens
+
+Backend (Simulated):
+- Create jobs when file uploaded
+- Simulate async processing using delays
+- Update job progress in steps
+- Maintain states: queued, processing, completed, failed
+- Store structured JSON output
+
+Behavior:
+- Poll backend every 2 seconds for updates
+- Real-time feeling UI without page reload
+
+Important:
+- NO authentication (no login/signup)
+- Focus heavily on UI polish and user experience
+- Make it look like a real startup product ready for production
+- Code structure should be clean and modular
+
+Final Goal:
+The application should look like it was built by an experienced frontend engineer and product designer, not a beginner.

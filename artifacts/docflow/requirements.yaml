@@ -1,0 +1,11 @@
+packages:
+  "framer-motion": "For premium layout transitions, pulsing animations, and micro-interactions"
+  "react-dropzone": "For the drag-and-drop file upload experience"
+  "date-fns": "For formatting document upload and processing times"
+  "clsx": "Utility for conditionally joining classNames"
+  "tailwind-merge": "Utility to resolve Tailwind CSS class conflicts"
+images: []
+notes:
+  - Import API hooks directly from @workspace/api-client-react as per monorepo structure.
+  - Using refetchInterval for live job status updates on Jobs and Dashboard.
+  - Implemented custom invalidation wrappers for mutations to ensure cache consistency.
